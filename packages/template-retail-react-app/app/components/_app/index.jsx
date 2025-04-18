@@ -19,7 +19,7 @@ import {
 } from '@salesforce/commerce-sdk-react'
 import logger from '@salesforce/retail-react-app/app/utils/logger-instance'
 import {useAppOrigin} from '@salesforce/retail-react-app/app/hooks/use-app-origin'
-import { getConfig } from '@salesforce/pwa-kit-runtime/utils/ssr-config'
+import {getConfig} from '@salesforce/pwa-kit-runtime/utils/ssr-config'
 
 // Chakra
 import {
@@ -197,7 +197,7 @@ const App = (props) => {
     // customer.
     const {data: customer} = useCurrentCustomer()
     const {data: basket} = useCurrentBasket()
-    const config = getConfig();
+    const config = getConfig()
 
     const updateBasket = useShopperBasketsMutation('updateBasket')
     const updateCustomerForBasket = useShopperBasketsMutation('updateCustomerForBasket')
@@ -244,16 +244,20 @@ const App = (props) => {
         // location path is changed.
         onClose()
     }, [location])
-    
-    if (config.app.commerceAgenticMiawEnabled === 'true') { // Env variables are strings
-        useMiaw(config.app.salesforceOrgId,
+
+    // Env variables are strings
+    if (config.app.commerceAgenticMiawEnabled === 'true') {
+        useMiaw(
+            config.app.salesforceOrgId,
             config.app.commerceAgenticEsdName,
             config.app.commerceAgenticEsdEndpoint,
             config.app.commerceAgenticScrt2Url,
             config.app.salesforceSiteId,
             config.app.slasToken,
             basket?.basketId,
-            appOrigin, config.app.commerceAgenticEsdScriptSourceUrl);
+            appOrigin,
+            config.app.commerceAgenticEsdScriptSourceUrl
+        )
     }
 
     const onLogoClick = () => {
